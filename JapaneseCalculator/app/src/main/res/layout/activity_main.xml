@@ -8,12 +8,17 @@
     android:padding="20dp">
 
     <TableLayout
+        android:id="@+id/tableLayout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        >
+        app:layout_constraintStart_toStartOf="parent">
+
+        <Button
+            android:id="@+id/btnClear"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="CLEAR" />
 
         <TableRow
             android:layout_width="match_parent"
@@ -83,13 +88,76 @@
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
                 android:text="9" />
+        </TableRow>
 
+        <Button
+            android:id="@+id/btnZero"
+            android:layout_width="wrap_content"
+            android:layout_height="100dp"
+            android:text="0" />
+
+    </TableLayout>
+
+    <TableLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/tableLayout"
+        app:layout_constraintTop_toTopOf="@+id/tableLayout"
+        android:layout_marginStart="10dp">
+
+        <TableRow>
             <Button
-                android:id="@+id/btnZero"
+                android:id="@+id/btnDivide"
                 android:layout_width="wrap_content"
                 android:layout_height="100dp"
-                android:text="0" />
+                android:text="÷" />
         </TableRow>
+
+        <TableRow>
+            <Button
+                android:id="@+id/btnMultiply"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:text="X" />
+        </TableRow>
+
+        <TableRow>
+            <Button
+                android:id="@+id/btnSubtract"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:text="-" />
+        </TableRow>
+
+        <TableRow>
+            <Button
+                android:id="@+id/btnAdd"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:text="+" />
+        </TableRow>
+
+        <TableRow>
+            <Button
+                android:id="@+id/btnEquals"
+                android:layout_width="wrap_content"
+                android:layout_height="100dp"
+                android:text="=" />
+        </TableRow>
+
     </TableLayout>
+
+
+    <TextView
+        android:id="@+id/txtNumber"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="0"
+        android:textSize="50sp"
+        app:layout_constraintBottom_toTopOf="@+id/tableLayout"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
