@@ -17,7 +17,7 @@
         <Button
             android:id="@+id/btnClear"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:text="CLEAR" />
 
         <TableRow
@@ -27,20 +27,20 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnOne"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="1"
                 android:textSize="15sp" />
 
             <Button
                 android:id="@+id/btnTwo"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="2" />
 
             <Button
                 android:id="@+id/btnThree"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="3" />
         </TableRow>
 
@@ -51,19 +51,19 @@
             <Button
                 android:id="@+id/btnFour"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="4" />
 
             <Button
                 android:id="@+id/btnFive"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="5" />
 
             <Button
                 android:id="@+id/btnSix"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="6" />
         </TableRow>
 
@@ -74,26 +74,26 @@
             <Button
                 android:id="@+id/btnSeven"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="7" />
 
             <Button
                 android:id="@+id/btnEight"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="8" />
 
             <Button
                 android:id="@+id/btnNine"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="9" />
         </TableRow>
 
         <Button
             android:id="@+id/btnZero"
             android:layout_width="wrap_content"
-            android:layout_height="100dp"
+            android:layout_height="75dp"
             android:text="0" />
 
     </TableLayout>
@@ -110,7 +110,7 @@
             <Button
                 android:id="@+id/btnDivide"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="÷" />
         </TableRow>
 
@@ -118,7 +118,7 @@
             <Button
                 android:id="@+id/btnMultiply"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="X" />
         </TableRow>
 
@@ -126,7 +126,7 @@
             <Button
                 android:id="@+id/btnSubtract"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="-" />
         </TableRow>
 
@@ -134,7 +134,7 @@
             <Button
                 android:id="@+id/btnAdd"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="+" />
         </TableRow>
 
@@ -142,7 +142,7 @@
             <Button
                 android:id="@+id/btnEquals"
                 android:layout_width="wrap_content"
-                android:layout_height="100dp"
+                android:layout_height="75dp"
                 android:text="=" />
         </TableRow>
 

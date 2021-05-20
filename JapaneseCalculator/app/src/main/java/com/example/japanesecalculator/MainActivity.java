@@ -20,6 +20,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     boolean cleared = true;
 
     MediaPlayer oneSoundMP, twoSoundMP, threeSoundMP, fourSoundMP, fiveSoundMP, sixSoundMP, sevenSoundMP, eightSoundMP, nineSoundMP, zeroSoundMP;
+    MediaPlayer divideSoundMP, multiplySoundMP, subtractSoundMP, addSoundMP;
+    MediaPlayer clearSoundMP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,6 +39,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         nineSoundMP = MediaPlayer.create(this, R.raw.nine);
         zeroSoundMP = MediaPlayer.create(this, R.raw.zero);
 
+        divideSoundMP = MediaPlayer.create(this, R.raw.divide);
+        multiplySoundMP = MediaPlayer.create(this, R.raw.multiply);
+        subtractSoundMP = MediaPlayer.create(this, R.raw.subtract);
+        addSoundMP = MediaPlayer.create(this, R.raw.add);
+
         initialiseViews();
 
         btnOne.setOnClickListener(this);
@@ -49,6 +56,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnEight.setOnClickListener(this);
         btnNine.setOnClickListener(this);
         btnZero.setOnClickListener(this);
+
+        btnDivide.setOnClickListener(this);
+        btnMultiply.setOnClickListener(this);
+        btnSubtract.setOnClickListener(this);
+        btnAdd.setOnClickListener(this);
+
+        btnClear.setOnClickListener(this);
     }
     public void initialiseViews(){
         btnOne = findViewById(R.id.btnOne);
@@ -116,6 +130,21 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 zeroSoundMP.start();
                 insertNumber("0");
                 break;
+            case R.id.btnDivide:
+                divideSoundMP.start();
+                break;
+            case R.id.btnMultiply:
+                multiplySoundMP.start();
+                break;
+            case R.id.btnSubtract:
+                subtractSoundMP.start();
+                break;
+            case R.id.btnAdd:
+                addSoundMP.start();
+                break;
+            case R.id.btnClear:
+                clear();
+                break;
             default:
                 break;
         }
@@ -129,6 +158,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         number += enteredNumber;
         txtNumber.setText(number);
         cleared = false;
+    }
+
+    public void clear(){
+        cleared = true;
+        number = "";
+        txtNumber.setText("0");
     }
 
 }
