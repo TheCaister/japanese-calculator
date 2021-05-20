@@ -18,6 +18,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     String number = "";
     boolean cleared = true;
+    char chosenOperator = ' ';
+    int firstOperand, secondOperand;
+    boolean firstOperandSelected = true;
 
     MediaPlayer oneSoundMP, twoSoundMP, threeSoundMP, fourSoundMP, fiveSoundMP, sixSoundMP, sevenSoundMP, eightSoundMP, nineSoundMP, zeroSoundMP;
     MediaPlayer divideSoundMP, multiplySoundMP, subtractSoundMP, addSoundMP;
@@ -63,6 +66,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd.setOnClickListener(this);
 
         btnClear.setOnClickListener(this);
+
+        btnEquals.setOnClickListener(this);
     }
     public void initialiseViews(){
         btnOne = findViewById(R.id.btnOne);
@@ -84,6 +89,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnAdd = findViewById(R.id.btnAdd);
 
         btnClear = findViewById(R.id.btnClear);
+
+        btnEquals = findViewById(R.id.btnEquals);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -132,18 +139,25 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 break;
             case R.id.btnDivide:
                 divideSoundMP.start();
+                setOperator('/');
                 break;
             case R.id.btnMultiply:
                 multiplySoundMP.start();
+                setOperator('*');
                 break;
             case R.id.btnSubtract:
                 subtractSoundMP.start();
+                setOperator('-');
                 break;
             case R.id.btnAdd:
                 addSoundMP.start();
+                setOperator('+');
                 break;
             case R.id.btnClear:
                 clear();
+                break;
+            case R.id.btnEquals:
+                calculate();
                 break;
             default:
                 break;
@@ -152,11 +166,18 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void insertNumber(String enteredNumber){
         //Do nothing if the number inputted is 0 and it's cleared already
-        if(cleared && enteredNumber.equals("0")){
+        if(cleared && enteredNumber.equals("0") || number.length() > 8){
             return;
         }
         number += enteredNumber;
         txtNumber.setText(number);
+
+        if(firstOperandSelected){
+            firstOperand = Integer.parseInt(number);
+        }
+        else {
+            secondOperand = Integer.parseInt(number);
+        }
         cleared = false;
     }
 
@@ -164,6 +185,76 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cleared = true;
         number = "";
         txtNumber.setText("0");
+        firstOperand = 0;
+        secondOperand = 0;
+        firstOperandSelected = true;
     }
 
+    public void calculate(){
+        if(!firstOperandSelected){
+            switch (chosenOperator){
+                case '/':
+                    firstOperand = firstOperand / secondOperand;
+                    number = Integer.toString(firstOperand);
+                    txtNumber.setText(number);
+                    firstOperandSelected = true;
+                    break;
+                case '*':
+                    firstOperand = firstOperand * secondOperand;
+                    number = Integer.toString(firstOperand);
+                    txtNumber.setText(number);
+                    firstOperandSelected = true;
+                    break;
+                case '-':
+                    firstOperand = firstOperand - secondOperand;
+                    number = Integer.toString(firstOperand);
+                    txtNumber.setText(number);
+                    firstOperandSelected = true;
+                    break;
+                case '+':
+                    firstOperand = firstOperand + secondOperand;
+                    number = Integer.toString(firstOperand);
+                    txtNumber.setText(number);
+                    firstOperandSelected = true;
+                    break;
+                default:
+                    break;
+            }
+        }
+    }
+
+    public void setOperator(char operator){
+        //This will only work when we're on the first operand.
+        if(firstOperandSelected){
+            firstOperandSelected = false;
+            switch (operator){
+                case '/':
+                    chosenOperator = '/';
+                    number = "";
+                    txtNumber.setText("0");
+                    break;
+                case '*':
+                    chosenOperator = '*';
+                    number = "";
+                    txtNumber.setText("0");
+                    break;
+                case '-':
+                    chosenOperator = '-';
+                    number = "";
+                    txtNumber.setText("0");
+                    break;
+                case '+':
+                    chosenOperator = '+';
+                    number = "";
+                    txtNumber.setText("0");
+                    break;
+                default:
+                    chosenOperator = ' ';
+                    break;
+            }
+        }
+        else {
+            calculate();
+        }
+    }
 }
