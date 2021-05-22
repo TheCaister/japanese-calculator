@@ -16,11 +16,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnDivide, btnMultiply, btnSubtract, btnAdd, btnEquals;
     private Button btnClear;
 
+
+    //Number to be printed to the screen
     String number = "";
     boolean cleared = true;
     char chosenOperator = ' ';
+
+    //Containers for the first and second operands
     int firstOperand, secondOperand;
+
+
     boolean firstOperandSelected = true;
+
+    public void setFirstOperandSelected(boolean firstOperandSelected) {
+        this.firstOperandSelected = firstOperandSelected;
+        System.out.println("First operand selected: " + firstOperandSelected);
+        System.out.println("First operand: " + firstOperand + "\t\tSecond operand: " + secondOperand);
+    }
 
     MediaPlayer oneSoundMP, twoSoundMP, threeSoundMP, fourSoundMP, fiveSoundMP, sixSoundMP, sevenSoundMP, eightSoundMP, nineSoundMP, zeroSoundMP;
     MediaPlayer divideSoundMP, multiplySoundMP, subtractSoundMP, addSoundMP;
@@ -157,7 +169,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 clear();
                 break;
             case R.id.btnEquals:
-                calculate();
+                calculate(false);
                 break;
             default:
                 break;
@@ -169,6 +181,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         if(cleared && enteredNumber.equals("0") || number.length() > 8){
             return;
         }
+
+        //Keep appending the numbers to number and then print it.
         number += enteredNumber;
         txtNumber.setText(number);
 
@@ -187,35 +201,42 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtNumber.setText("0");
         firstOperand = 0;
         secondOperand = 0;
-        firstOperandSelected = true;
+        setFirstOperandSelected(true);
     }
 
-    public void calculate(){
+    public void calculate(boolean continueCalculation){
+        //Only carry out the calculation once we are on the second operand.
         if(!firstOperandSelected){
             switch (chosenOperator){
+                //For each case, carry out the operation and print out the result.
+                //Reset number.
                 case '/':
                     firstOperand = firstOperand / secondOperand;
                     number = Integer.toString(firstOperand);
                     txtNumber.setText(number);
-                    firstOperandSelected = true;
+                    number = "";
+                    setFirstOperandSelected(true);
                     break;
                 case '*':
                     firstOperand = firstOperand * secondOperand;
                     number = Integer.toString(firstOperand);
                     txtNumber.setText(number);
-                    firstOperandSelected = true;
+                    number = "";
+                    setFirstOperandSelected(true);
                     break;
                 case '-':
                     firstOperand = firstOperand - secondOperand;
                     number = Integer.toString(firstOperand);
                     txtNumber.setText(number);
-                    firstOperandSelected = true;
+                    number = "";
+                    setFirstOperandSelected(true);
                     break;
                 case '+':
                     firstOperand = firstOperand + secondOperand;
                     number = Integer.toString(firstOperand);
                     txtNumber.setText(number);
-                    firstOperandSelected = true;
+                    number = "";
+                    setFirstOperandSelected(true);
                     break;
                 default:
                     break;
@@ -226,27 +247,23 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setOperator(char operator){
         //This will only work when we're on the first operand.
         if(firstOperandSelected){
-            firstOperandSelected = false;
+            setFirstOperandSelected(false);
             switch (operator){
                 case '/':
                     chosenOperator = '/';
                     number = "";
-                    txtNumber.setText("0");
                     break;
                 case '*':
                     chosenOperator = '*';
                     number = "";
-                    txtNumber.setText("0");
                     break;
                 case '-':
                     chosenOperator = '-';
                     number = "";
-                    txtNumber.setText("0");
                     break;
                 case '+':
                     chosenOperator = '+';
                     number = "";
-                    txtNumber.setText("0");
                     break;
                 default:
                     chosenOperator = ' ';
@@ -254,7 +271,30 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             }
         }
         else {
-            calculate();
+            System.out.println("First operand: " + firstOperand + "\nSecond operand: " + secondOperand);
+            switch (operator){
+                case '/':
+                    chosenOperator = '/';
+                    number = "";
+                    break;
+                case '*':
+                    chosenOperator = '*';
+                    number = "";
+                    break;
+                case '-':
+                    chosenOperator = '-';
+                    number = "";
+                    break;
+                case '+':
+                    chosenOperator = '+';
+                    number = "";
+                    break;
+                default:
+                    chosenOperator = ' ';
+                    break;
+            }
+            calculate(true);
+            setFirstOperandSelected(false);
         }
     }
 }
