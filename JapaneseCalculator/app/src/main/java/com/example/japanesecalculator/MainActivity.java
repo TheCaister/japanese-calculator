@@ -20,11 +20,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     //Number to be printed to the screen
     String number = "";
     boolean cleared = true;
+
+    public void setChosenOperator(char chosenOperator) {
+        System.out.println("Selected operator: " + chosenOperator);
+        this.chosenOperator = chosenOperator;
+    }
+
     char chosenOperator = ' ';
 
     //Containers for the first and second operands
     int firstOperand, secondOperand;
-
 
     boolean firstOperandSelected = true;
 
@@ -81,6 +86,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnEquals.setOnClickListener(this);
     }
+
     public void initialiseViews(){
         btnOne = findViewById(R.id.btnOne);
         btnTwo = findViewById(R.id.btnTwo);
@@ -169,7 +175,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 clear();
                 break;
             case R.id.btnEquals:
-                calculate(false);
+                calculate();
                 break;
             default:
                 break;
@@ -186,15 +192,19 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         number += enteredNumber;
         txtNumber.setText(number);
 
+        //If the first operand is selected, convert the "number" string to an int and assign it to the first operand.
         if(firstOperandSelected){
             firstOperand = Integer.parseInt(number);
         }
         else {
             secondOperand = Integer.parseInt(number);
         }
+
+        //Cleared becomes false
         cleared = false;
     }
 
+    //Method for clearing the calculator
     public void clear(){
         cleared = true;
         number = "";
@@ -204,96 +214,102 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         setFirstOperandSelected(true);
     }
 
-    public void calculate(boolean continueCalculation){
-        //Only carry out the calculation once we are on the second operand.
-        if(!firstOperandSelected){
+    public void calculate(){
+            //Check what operator is chosen
             switch (chosenOperator){
                 //For each case, carry out the operation and print out the result.
                 //Reset number.
                 case '/':
+                    if(secondOperand == 0){
+                        firstOperand = 0;
+                        break;
+                    }
                     firstOperand = firstOperand / secondOperand;
-                    number = Integer.toString(firstOperand);
-                    txtNumber.setText(number);
-                    number = "";
-                    setFirstOperandSelected(true);
                     break;
                 case '*':
                     firstOperand = firstOperand * secondOperand;
-                    number = Integer.toString(firstOperand);
-                    txtNumber.setText(number);
-                    number = "";
-                    setFirstOperandSelected(true);
                     break;
                 case '-':
                     firstOperand = firstOperand - secondOperand;
-                    number = Integer.toString(firstOperand);
-                    txtNumber.setText(number);
-                    number = "";
-                    setFirstOperandSelected(true);
                     break;
                 case '+':
                     firstOperand = firstOperand + secondOperand;
-                    number = Integer.toString(firstOperand);
-                    txtNumber.setText(number);
-                    number = "";
-                    setFirstOperandSelected(true);
                     break;
                 default:
                     break;
             }
-        }
+            number = Integer.toString(firstOperand);
+            txtNumber.setText(number);
+            number = "";
+            setFirstOperandSelected(true);
     }
 
     public void setOperator(char operator){
-        //This will only work when we're on the first operand.
         if(firstOperandSelected){
             setFirstOperandSelected(false);
             switch (operator){
                 case '/':
-                    chosenOperator = '/';
-                    number = "";
+                    setChosenOperator('/');
                     break;
                 case '*':
-                    chosenOperator = '*';
-                    number = "";
+                    setChosenOperator('*');
                     break;
                 case '-':
-                    chosenOperator = '-';
-                    number = "";
+                    setChosenOperator('-');
                     break;
                 case '+':
-                    chosenOperator = '+';
-                    number = "";
+                    setChosenOperator('+');
                     break;
                 default:
-                    chosenOperator = ' ';
+                    setChosenOperator(' ');
                     break;
             }
+            number = "";
         }
-        else {
-            System.out.println("First operand: " + firstOperand + "\nSecond operand: " + secondOperand);
+        else if(secondOperand == 0) {
+            System.out.println("First operand: " + firstOperand + "\t\tSecond operand: " + secondOperand);
             switch (operator){
                 case '/':
-                    chosenOperator = '/';
-                    number = "";
+                    setChosenOperator('/');
                     break;
                 case '*':
-                    chosenOperator = '*';
-                    number = "";
+                    setChosenOperator('*');
                     break;
                 case '-':
-                    chosenOperator = '-';
-                    number = "";
+                    setChosenOperator('-');
                     break;
                 case '+':
-                    chosenOperator = '+';
-                    number = "";
+                    setChosenOperator('+');
                     break;
                 default:
-                    chosenOperator = ' ';
+                    setChosenOperator(' ');
                     break;
             }
-            calculate(true);
+            secondOperand = 0;
+            number = "";
+        }
+        else {
+            System.out.println("First operand: " + firstOperand + "\t\tSecond operand: " + secondOperand);
+            calculate();
+            switch (operator){
+                case '/':
+                    setChosenOperator('/');
+                    break;
+                case '*':
+                    setChosenOperator('*');
+                    break;
+                case '-':
+                    setChosenOperator('-');
+                    break;
+                case '+':
+                    setChosenOperator('+');
+                    break;
+                default:
+                    setChosenOperator(' ');
+                    break;
+            }
+            secondOperand = 0;
+            number = "";
             setFirstOperandSelected(false);
         }
     }
