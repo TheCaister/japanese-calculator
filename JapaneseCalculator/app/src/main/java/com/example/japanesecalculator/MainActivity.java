@@ -12,7 +12,8 @@ import android.widget.TextView;
 public class MainActivity extends AppCompatActivity implements View.OnClickListener {
 
     private Button btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine, btnZero;
-    private TextView txtNumber;
+    private TextView txtNumber, txtPrevNumber;
+    private TextView txtOperator;
     private Button btnDivide, btnMultiply, btnSubtract, btnAdd, btnEquals;
     private Button btnClear;
 
@@ -100,6 +101,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnZero = findViewById(R.id.btnZero);
 
         txtNumber = findViewById(R.id.txtNumber);
+        txtPrevNumber = findViewById(R.id.txtPrevNumber);
+
+        txtOperator = findViewById(R.id.txtOperator);
 
         btnDivide = findViewById(R.id.btnDivide);
         btnMultiply = findViewById(R.id.btnMultiply);
@@ -109,6 +113,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnClear = findViewById(R.id.btnClear);
 
         btnEquals = findViewById(R.id.btnEquals);
+
+        divideSoundMP.setNextMediaPlayer(subtractSoundMP);
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -239,6 +245,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                     break;
             }
             number = Integer.toString(firstOperand);
+            txtPrevNumber.setText(number);
             txtNumber.setText(number);
             number = "";
             setFirstOperandSelected(true);
@@ -247,70 +254,38 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     public void setOperator(char operator){
         if(firstOperandSelected){
             setFirstOperandSelected(false);
-            switch (operator){
-                case '/':
-                    setChosenOperator('/');
-                    break;
-                case '*':
-                    setChosenOperator('*');
-                    break;
-                case '-':
-                    setChosenOperator('-');
-                    break;
-                case '+':
-                    setChosenOperator('+');
-                    break;
-                default:
-                    setChosenOperator(' ');
-                    break;
-            }
-            number = "";
+            switchOperator(operator);
         }
         else if(secondOperand == 0) {
-            System.out.println("First operand: " + firstOperand + "\t\tSecond operand: " + secondOperand);
-            switch (operator){
-                case '/':
-                    setChosenOperator('/');
-                    break;
-                case '*':
-                    setChosenOperator('*');
-                    break;
-                case '-':
-                    setChosenOperator('-');
-                    break;
-                case '+':
-                    setChosenOperator('+');
-                    break;
-                default:
-                    setChosenOperator(' ');
-                    break;
-            }
-            secondOperand = 0;
-            number = "";
+            switchOperator(operator);
         }
         else {
-            System.out.println("First operand: " + firstOperand + "\t\tSecond operand: " + secondOperand);
             calculate();
-            switch (operator){
-                case '/':
-                    setChosenOperator('/');
-                    break;
-                case '*':
-                    setChosenOperator('*');
-                    break;
-                case '-':
-                    setChosenOperator('-');
-                    break;
-                case '+':
-                    setChosenOperator('+');
-                    break;
-                default:
-                    setChosenOperator(' ');
-                    break;
-            }
-            secondOperand = 0;
-            number = "";
+            switchOperator(operator);
             setFirstOperandSelected(false);
         }
+    }
+
+    public void switchOperator(char operator){
+        switch (operator){
+            case '/':
+                setChosenOperator('/');
+                break;
+            case '*':
+                setChosenOperator('*');
+                break;
+            case '-':
+                setChosenOperator('-');
+                break;
+            case '+':
+                setChosenOperator('+');
+                break;
+            default:
+                setChosenOperator(' ');
+                break;
+        }
+        txtOperator.setText(Character.toString(operator));
+        secondOperand = 0;
+        number = "";
     }
 }
