@@ -9,13 +9,16 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
-public class MainActivity extends AppCompatActivity implements View.OnClickListener {
+import java.util.ArrayList;
+
+public class MainActivity extends AppCompatActivity implements View.OnClickListener, MediaPlayer.OnCompletionListener {
 
     private Button btnOne, btnTwo, btnThree, btnFour, btnFive, btnSix, btnSeven, btnEight, btnNine, btnZero;
     private TextView txtNumber, txtPrevNumber;
     private TextView txtOperator;
     private Button btnDivide, btnMultiply, btnSubtract, btnAdd, btnEquals;
     private Button btnClear;
+    private Button btnListen;
 
 
     //Number to be printed to the screen
@@ -33,6 +36,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     int firstOperand, secondOperand;
 
     boolean firstOperandSelected = true;
+
+    MediaPlayer nextSoundToBePlayed = null;
+    ArrayList<MediaPlayer> soundListToBePlayed = new ArrayList<>();
+    int soundListIndex = 0;
 
     public void setFirstOperandSelected(boolean firstOperandSelected) {
         this.firstOperandSelected = firstOperandSelected;
@@ -65,6 +72,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         subtractSoundMP = MediaPlayer.create(this, R.raw.subtract);
         addSoundMP = MediaPlayer.create(this, R.raw.add);
 
+        oneSoundMP.setOnCompletionListener(this);
+        twoSoundMP.setOnCompletionListener(this);
+        threeSoundMP.setOnCompletionListener(this);
+        fourSoundMP.setOnCompletionListener(this);
+        fiveSoundMP.setOnCompletionListener(this);
+        sixSoundMP.setOnCompletionListener(this);
+        sevenSoundMP.setOnCompletionListener(this);
+        eightSoundMP.setOnCompletionListener(this);
+        nineSoundMP.setOnCompletionListener(this);
+        zeroSoundMP.setOnCompletionListener(this);
+
         initialiseViews();
 
         btnOne.setOnClickListener(this);
@@ -86,6 +104,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnClear.setOnClickListener(this);
 
         btnEquals.setOnClickListener(this);
+
+        btnListen.setOnClickListener(this);
     }
 
     public void initialiseViews(){
@@ -114,7 +134,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         btnEquals = findViewById(R.id.btnEquals);
 
+        btnListen = findViewById(R.id.btnListen);
+
         divideSoundMP.setNextMediaPlayer(subtractSoundMP);
+    }
+
+    @Override
+    public void onCompletion(MediaPlayer mediaPlayer) {
+        //Once an audio file finishes playing, if there is a "next sound" to be played, play it and set it to null.
+        if(nextSoundToBePlayed != null){
+            System.out.println(nextSoundToBePlayed);
+            if(soundListToBePlayed.size() != 0 && soundListIndex != soundListToBePlayed.size()){
+                nextSoundToBePlayed = soundListToBePlayed.get(soundListIndex);
+                soundListIndex++;
+                nextSoundToBePlayed.start();
+            }
+            else{
+                resetSoundList();
+                nextSoundToBePlayed = null;
+            }
+        }
     }
 
     @SuppressLint("NonConstantResourceId")
@@ -183,6 +222,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             case R.id.btnEquals:
                 calculate();
                 break;
+            case R.id.btnListen:
+                readNumberOneByOne();
+                break;
             default:
                 break;
         }
@@ -190,7 +232,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void insertNumber(String enteredNumber){
         //Do nothing if the number inputted is 0 and it's cleared already
-        if(cleared && enteredNumber.equals("0") || number.length() > 8){
+        if(cleared && enteredNumber.equals("0") || number.length() >= 8){
             return;
         }
 
@@ -206,6 +248,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             secondOperand = Integer.parseInt(number);
         }
 
+        resetSoundList();
+
         //Cleared becomes false
         cleared = false;
     }
@@ -218,6 +262,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         firstOperand = 0;
         secondOperand = 0;
         setFirstOperandSelected(true);
+        resetSoundList();
+    }
+
+    public void resetSoundList(){
+        soundListToBePlayed.clear();
+        soundListIndex = 0;
     }
 
     public void calculate(){
@@ -249,10 +299,16 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
             txtNumber.setText(number);
             number = "";
             setFirstOperandSelected(true);
+            //Say "ha"
+            speakNumber(firstOperand);
+            //Say "equals to"
     }
 
+    @SuppressLint("SetTextI18n")
     public void setOperator(char operator){
+        resetSoundList();
         if(firstOperandSelected){
+            txtPrevNumber.setText(Integer.toString(firstOperand));
             setFirstOperandSelected(false);
             switchOperator(operator);
         }
@@ -287,5 +343,87 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtOperator.setText(Character.toString(operator));
         secondOperand = 0;
         number = "";
+    }
+
+    public void speakNumber(int number){
+        if(number == 0){
+            //Say "zero"
+            return;
+        }
+        if(number < 0){
+            //Say "minus"
+        }
+
+        int upperHalf = number / 10000;
+        int lowerHalf = number % 10000;
+
+        if(upperHalf != 0){
+            speakNumberThousands(upperHalf);
+            //Say "man"
+        }
+
+        speakNumberThousands(lowerHalf);
+
+
+        nextSoundToBePlayed = zeroSoundMP;
+        oneSoundMP.start();
+    }
+
+    public void speakNumberThousands(int number){
+
+    }
+
+    public void readNumberOneByOne(){
+        for(char number : number.toCharArray()){
+            readSingleNumber(number);
+        }
+
+        playSoundList();
+    }
+
+    public void readSingleNumber(char number){
+        switch (number){
+            case '1':
+                soundListToBePlayed.add(oneSoundMP);
+                break;
+            case '2':
+                soundListToBePlayed.add(twoSoundMP);
+                break;
+            case '3':
+                soundListToBePlayed.add(threeSoundMP);
+                break;
+            case '4':
+                soundListToBePlayed.add(fourSoundMP);
+                break;
+            case '5':
+                soundListToBePlayed.add(fiveSoundMP);
+                break;
+            case '6':
+                soundListToBePlayed.add(sixSoundMP);
+                break;
+            case '7':
+                soundListToBePlayed.add(sevenSoundMP);
+                break;
+            case '8':
+                soundListToBePlayed.add(eightSoundMP);
+                break;
+            case '9':
+                soundListToBePlayed.add(nineSoundMP);
+                break;
+            case '0':
+                soundListToBePlayed.add(zeroSoundMP);
+                break;
+        }
+    }
+
+    public void playSoundList(){
+        if(soundListToBePlayed.size() == 1){
+            soundListToBePlayed.get(0).start();
+            soundListToBePlayed.clear();
+            return;
+        }
+        soundListIndex = 1;
+        nextSoundToBePlayed = soundListToBePlayed.get(soundListIndex);
+        soundListToBePlayed.get(0).start();
     }
 }
