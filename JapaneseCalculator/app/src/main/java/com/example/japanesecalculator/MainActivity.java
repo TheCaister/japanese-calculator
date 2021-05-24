@@ -340,7 +340,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         //Say "equals to"
 
         resetSoundList();
-        readNumberOneByOne(Integer.toString(firstOperand));
+        speakNumber(firstOperand);
     }
 
     @SuppressLint("SetTextI18n")
@@ -410,6 +410,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         int tens = (number % 100) / 10;
         int units = number % 10;
 
+        System.out.println("Thousands: " + (char)thousands + "\t\tHundreds: " + hundreds + "\t\tTens: " + tens + "\t\tUnits: " + units);
+
         //Check if it's one thousand or three thousand
         if(thousands == 1){
             soundListToBePlayed.add(thousandSoundMP);
@@ -420,7 +422,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else if (thousands == 0){
         }
         else{
-            readSingleNumber((char)thousands);
+            readSingleNumber((char)(thousands + '0'));
             soundListToBePlayed.add(thousandSoundMP);
         }
 
@@ -439,7 +441,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if (hundreds == 0){}
         else{
-            readSingleNumber((char)hundreds);
+            readSingleNumber((char)(hundreds + '0'));
             soundListToBePlayed.add(hundredSoundMP);
         }
 
@@ -449,16 +451,17 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         }
         else if(tens == 0){}
         else{
-            readSingleNumber((char)tens);
+            readSingleNumber((char)(tens + '0'));
             soundListToBePlayed.add(tenSoundMP);
         }
 
         if(units == 0){}
         else{
-            readSingleNumber((char)units);
+            readSingleNumber((char)(units + '0'));
         }
 
-        resetSoundList();
+        System.out.println(soundListToBePlayed);
+        playSoundList();
     }
 
     public void readNumberOneByOne(String numbers){
@@ -511,6 +514,9 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     //Method for playing the sound list
     public void playSoundList(){
+        if(soundListToBePlayed.size() == 0){
+            return;
+        }
         //If the size of the list is 1, play the first MP then clear the list.
         if(soundListToBePlayed.size() == 1){
             soundListToBePlayed.get(0).start();
