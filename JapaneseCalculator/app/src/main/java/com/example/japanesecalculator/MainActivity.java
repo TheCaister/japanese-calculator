@@ -55,6 +55,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     MediaPlayer eightHundredSoundMP, eightThousandSoundMP, sixHundredSoundMP, threeHundredSoundMP, threeThousandSoundMP;
     MediaPlayer divideSoundMP, multiplySoundMP, subtractSoundMP, addSoundMP;
     MediaPlayer clearSoundMP;
+    MediaPlayer haSoundMP, equalsSoundMP;
+    MediaPlayer minusSoundMP;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +92,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         clearSoundMP = MediaPlayer.create(this, R.raw.clear);
 
+        haSoundMP = MediaPlayer.create(this, R.raw.equals);
+        equalsSoundMP = MediaPlayer.create(this, R.raw.equals_formal);
+
+        minusSoundMP = MediaPlayer.create(this, R.raw.minus);
+
         oneSoundMP.setOnCompletionListener(this);
         twoSoundMP.setOnCompletionListener(this);
         threeSoundMP.setOnCompletionListener(this);
@@ -111,6 +118,11 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         sixHundredSoundMP.setOnCompletionListener(this);
         threeHundredSoundMP.setOnCompletionListener(this);
         threeThousandSoundMP.setOnCompletionListener(this);
+
+        haSoundMP.setOnCompletionListener(this);
+        equalsSoundMP.setOnCompletionListener(this);
+
+        minusSoundMP.setOnCompletionListener(this);
 
         initialiseViews();
 
@@ -256,6 +268,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 calculate();
                 break;
             case R.id.btnListen:
+                resetSoundList();
                 readNumberOneByOne(txtNumber.getText().toString());
                 break;
             default:
@@ -293,6 +306,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         cleared = true;
         number = "";
         txtNumber.setText("0");
+        txtPrevNumber.setText("0");
         firstOperand = 0;
         secondOperand = 0;
         setFirstOperandSelected(true);
@@ -335,12 +349,12 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         txtNumber.setText(number);
         number = "";
         setFirstOperandSelected(true);
-        //Say "ha"
-        //speakNumber(firstOperand);
-        //Say "equals to"
 
         resetSoundList();
+        soundListToBePlayed.add(haSoundMP);
         speakNumber(firstOperand);
+        soundListToBePlayed.add(equalsSoundMP);
+        playSoundList();
     }
 
     @SuppressLint("SetTextI18n")
@@ -386,11 +400,13 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void speakNumber(int number){
         if(number == 0){
-            //Say "zero"
+            resetSoundList();
+            soundListToBePlayed.add(zeroSoundMP);
+            playSoundList();
             return;
         }
         if(number < 0){
-            //Say "minus"
+            soundListToBePlayed.add(minusSoundMP);
         }
 
         int upperHalf = number / 10000;
@@ -398,6 +414,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         if(upperHalf != 0){
             speakNumberThousands(upperHalf);
+            soundListToBePlayed.add(tenThousandSoundMP);
             //Say "man"
         }
 
@@ -405,6 +422,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     }
 
     public void speakNumberThousands(int number){
+        number = Math.abs(number);
         int thousands = number / 1000;
         int hundreds = (number % 1000) / 100;
         int tens = (number % 100) / 10;
@@ -459,9 +477,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         else{
             readSingleNumber((char)(units + '0'));
         }
-
-        System.out.println(soundListToBePlayed);
-        playSoundList();
     }
 
     public void readNumberOneByOne(String numbers){
