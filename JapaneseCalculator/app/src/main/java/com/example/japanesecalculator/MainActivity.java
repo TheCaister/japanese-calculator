@@ -20,6 +20,7 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnDivide, btnMultiply, btnSubtract, btnAdd, btnEquals;
     private Button btnClear;
     private Button btnListen;
+    private Button btnNegative;
 
     //Number to be printed to the screen
     String number = "";
@@ -147,6 +148,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnEquals.setOnClickListener(this);
 
         btnListen.setOnClickListener(this);
+
+        btnNegative.setOnClickListener(this);
     }
 
     public void initialiseViews(){
@@ -176,6 +179,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         btnEquals = findViewById(R.id.btnEquals);
 
         btnListen = findViewById(R.id.btnListen);
+
+        btnNegative = findViewById(R.id.btnNegative);
     }
 
     @Override
@@ -271,6 +276,10 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 resetSoundList();
                 readNumberOneByOne(txtNumber.getText().toString());
                 break;
+            case R.id.btnNegative:
+                resetSoundList();
+                minusSoundMP.start();
+                invertNumber();
             default:
                 break;
         }
@@ -311,6 +320,26 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         secondOperand = 0;
         setFirstOperandSelected(true);
         resetSoundList();
+    }
+
+    //Method for switching a number between positive and negative.
+    public void invertNumber(){
+        if(firstOperandSelected){
+            firstOperand = -firstOperand;
+            if(firstOperand == 0){
+                return;
+            }
+            number = Integer.toString(firstOperand);
+        }
+        else{
+            secondOperand = -secondOperand;
+            if(secondOperand == 0){
+                return;
+            }
+            number = Integer.toString(secondOperand);
+        }
+
+        txtNumber.setText(number);
     }
 
     //Method for resetting the soundList and setting the soundIndex to 0.
@@ -430,12 +459,15 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
         System.out.println("Thousands: " + (char)thousands + "\t\tHundreds: " + hundreds + "\t\tTens: " + tens + "\t\tUnits: " + units);
 
-        //Check if it's one thousand or three thousand
+        //Check if it's 1000, 3000 or 8000
         if(thousands == 1){
             soundListToBePlayed.add(thousandSoundMP);
         }
         else if(thousands == 3){
             soundListToBePlayed.add(threeThousandSoundMP);
+        }
+        else if(thousands == 8){
+            soundListToBePlayed.add(eightThousandSoundMP);
         }
         else if (thousands == 0){
         }
