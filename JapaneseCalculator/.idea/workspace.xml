@@ -2,7 +2,10 @@
 <project version="4">
   <component name="AndroidLayouts">
     <shared>
-      <config />
+      <config>
+        <device id="pixel" />
+        <device id="pixel_3a_xl" />
+      </config>
     </shared>
   </component>
   <component name="AutoImportSettings">
@@ -128,26 +131,30 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1085" y="400" key="#com.intellij.ide.util.MemberChooser/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1621767106859" />
+    <state x="1010" y="446" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog" timestamp="1622121561624">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1010" y="446" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622121561624" />
     <state x="1700" y="444" key="FileChooserDialogImpl" timestamp="1621955812304">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1700" y="444" key="FileChooserDialogImpl/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1621955812304" />
-    <state width="1234" height="251" key="GridCell.Tab.0.bottom" timestamp="1621956016533">
+    <state width="1896" height="251" key="GridCell.Tab.0.bottom" timestamp="1622122356010">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1234" height="251" key="GridCell.Tab.0.bottom/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1621956016533" />
-    <state width="1234" height="251" key="GridCell.Tab.0.center" timestamp="1621956016533">
+    <state width="1896" height="251" key="GridCell.Tab.0.bottom/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622122356010" />
+    <state width="1896" height="251" key="GridCell.Tab.0.center" timestamp="1622122356010">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1234" height="251" key="GridCell.Tab.0.center/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1621956016533" />
-    <state width="1234" height="251" key="GridCell.Tab.0.left" timestamp="1621956016533">
+    <state width="1896" height="251" key="GridCell.Tab.0.center/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622122356010" />
+    <state width="1896" height="251" key="GridCell.Tab.0.left" timestamp="1622122356010">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1234" height="251" key="GridCell.Tab.0.left/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1621956016533" />
-    <state width="1234" height="251" key="GridCell.Tab.0.right" timestamp="1621956016533">
+    <state width="1896" height="251" key="GridCell.Tab.0.left/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622122356010" />
+    <state width="1896" height="251" key="GridCell.Tab.0.right" timestamp="1622122356010">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state width="1234" height="251" key="GridCell.Tab.0.right/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1621956016533" />
+    <state width="1896" height="251" key="GridCell.Tab.0.right/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622122356010" />
     <state x="936" y="330" key="run.anything.popup" timestamp="1621683206832">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>

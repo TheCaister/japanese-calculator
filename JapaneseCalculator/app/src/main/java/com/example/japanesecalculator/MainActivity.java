@@ -9,6 +9,11 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 
+import com.google.android.gms.ads.AdRequest;
+import com.google.android.gms.ads.AdSize;
+import com.google.android.gms.ads.AdView;
+import com.google.android.gms.ads.MobileAds;
+
 import java.util.ArrayList;
 
 public class MainActivity extends AppCompatActivity implements View.OnClickListener, MediaPlayer.OnCompletionListener {
@@ -21,6 +26,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     private Button btnClear;
     private Button btnListen;
     private Button btnNegative;
+    private AdView adView;
+
 
     //Number to be printed to the screen
     String number = "";
@@ -63,6 +70,14 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+
+        //Initialising ads
+        MobileAds.initialize(this);
+        adView = findViewById(R.id.adView);
+        AdRequest adRequest = new AdRequest.Builder().build();
+        adView.loadAd(adRequest);
+
 
         oneSoundMP = MediaPlayer.create(this, R.raw.one);
         twoSoundMP = MediaPlayer.create(this, R.raw.two);
@@ -266,15 +281,24 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
                 setOperator('+');
                 break;
             case R.id.btnClear:
+                resetSoundList();
                 clearSoundMP.start();
                 clear();
                 break;
             case R.id.btnEquals:
+                resetSoundList();
                 calculate();
                 break;
             case R.id.btnListen:
                 resetSoundList();
-                readNumberOneByOne(txtNumber.getText().toString());
+                //readNumberOneByOne(txtNumber.getText().toString());
+                if(firstOperandSelected){
+                    speakNumber(firstOperand);
+                }
+                else {
+                    speakNumber(secondOperand);
+                }
+                playSoundList();
                 break;
             case R.id.btnNegative:
                 resetSoundList();
@@ -320,6 +344,8 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         secondOperand = 0;
         setFirstOperandSelected(true);
         resetSoundList();
+        chosenOperator = ' ';
+        txtOperator.setText("");
     }
 
     //Method for switching a number between positive and negative.
@@ -379,7 +405,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
         number = "";
         setFirstOperandSelected(true);
 
-        resetSoundList();
         soundListToBePlayed.add(haSoundMP);
         speakNumber(firstOperand);
         soundListToBePlayed.add(equalsSoundMP);
@@ -429,7 +454,6 @@ public class MainActivity extends AppCompatActivity implements View.OnClickListe
 
     public void speakNumber(int number){
         if(number == 0){
-            resetSoundList();
             soundListToBePlayed.add(zeroSoundMP);
             playSoundList();
             return;
