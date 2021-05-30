@@ -24,6 +24,12 @@
       <ProjectState />
     </projectState>
   </component>
+  <component name="GenerateSignedApkSettings">
+    <option name="KEY_STORE_PATH" value="E:\(Work Stuff)\Coding Projects\keystore\keystorefile.jks" />
+    <option name="KEY_ALIAS" value="key1" />
+    <option name="REMEMBER_PASSWORDS" value="true" />
+    <option name="BUILD_TARGET_KEY" value="apk" />
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$/.." />
   </component>
@@ -34,6 +40,13 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ApkExportedModule" value="Japanese_Calculator.app" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectedDevice" value="VirtualDevicePath@C:\Users\Eddie\.android\avd\Pixel_2_API_29.avd" />
+    <property name="DeviceAndSnapshotComboBoxAction.selectionTime" value="2021-05-30T16:57:18.602126500Z" />
+    <property name="ExportApk.ApkPath" value="E:\(Work Stuff)\Coding Projects\japanese-calculator\JapaneseCalculator\app" />
+    <property name="ExportApk.BuildVariants" value="release" />
+    <property name="ExportApk.SignV1" value="true" />
+    <property name="ExportApk.SignV2" value="true" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="android.sdk.path" value="$PROJECT_DIR$/../../../../Android SDK/Sdk" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
@@ -135,10 +148,14 @@
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
     <state x="1010" y="446" key="#com.intellij.refactoring.safeDelete.UnsafeUsagesDialog/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622121561624" />
-    <state x="1700" y="444" key="FileChooserDialogImpl" timestamp="1622297401335">
+    <state x="1754" y="489" key="AndroidCreateXmlResourceDialog" timestamp="1622393831431">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
-    <state x="1700" y="444" key="FileChooserDialogImpl/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622297401335" />
+    <state x="1754" y="489" key="AndroidCreateXmlResourceDialog/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622393831431" />
+    <state x="1700" y="444" key="FileChooserDialogImpl" timestamp="1622298282166">
+      <screen x="0" y="0" width="2560" height="1400" />
+    </state>
+    <state x="1700" y="444" key="FileChooserDialogImpl/0.0.2560.1400/207.1440.1280.720@0.0.2560.1400" timestamp="1622298282166" />
     <state width="1895" height="251" key="GridCell.Tab.0.bottom" timestamp="1622294154252">
       <screen x="0" y="0" width="2560" height="1400" />
     </state>
